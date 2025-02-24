@@ -16,7 +16,6 @@ import ChatRoomsWebSocket from '../../../../services/webSocket/chatRoomsWebSocke
   
     useEffect(() => {
       if (!isModalOpen || !currentUserId) return;
-      console.log("testetetsetsetses")
   
       const initializeChatList = async () => {
         if (roomsSocketRef.current?.isConnected) return;

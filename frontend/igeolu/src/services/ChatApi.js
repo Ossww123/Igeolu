@@ -20,11 +20,11 @@ export const instance = axios.create({
 // 요청 인터셉터
 instance.interceptors.request.use(
   (config) => {
-    console.log('📌 [Request]');
-    console.log('➡️ URL:', config.baseURL + config.url);
-    console.log('➡️ Method:', config.method);
-    console.log('➡️ Params:', config.params);
-    console.log('➡️ Data:', config.data);
+    // console.log('📌 [Request]');
+    // console.log('➡️ URL:', config.baseURL + config.url);
+    // console.log('➡️ Method:', config.method);
+    // console.log('➡️ Params:', config.params);
+    // console.log('➡️ Data:', config.data);
     return config;
   },
   (error) => {
@@ -36,9 +36,9 @@ instance.interceptors.request.use(
 // 응답 인터셉터
 instance.interceptors.response.use(
   (response) => {
-    console.log('✅ [Response]');
-    console.log('⬅️ Status:', response.status);
-    console.log('⬅️ Data:', response.data);
+    // console.log('✅ [Response]');
+    // console.log('⬅️ Status:', response.status);
+    // console.log('⬅️ Data:', response.data);
     return response.data;
   },
   (error) => {
@@ -63,12 +63,12 @@ const ChatApi = {
       const response = await instance.get('/chats', { params: { userId } });
       
       // 필터링 전 전체 채팅방 데이터 확인
-      console.log('필터링 전 전체 채팅방:', response);
-      console.log('---------', userId, '-----------', userRole)
+      // console.log('필터링 전 전체 채팅방:', response);
+      // console.log('---------', userId, '-----------', userRole)
       
       const filteredRooms = response.filter(room => {
         // 각 room의 roomStatus 값 확인
-        console.log(`Room ${room.roomId} status:`, room.roomStatus);
+        // console.log(`Room ${room.roomId} status:`, room.roomStatus);
         
         if (userRole === 'ROLE_REALTOR') {
           return room.roomStatus === 'BOTH' || room.roomStatus === 'REALTOR';
@@ -79,7 +79,7 @@ const ChatApi = {
       });
       
       // 필터링 후 결과 확인
-      console.log('필터링 후 채팅방:', filteredRooms);
+      // console.log('필터링 후 채팅방:', filteredRooms);
       
       return filteredRooms;
     } catch (error) {
