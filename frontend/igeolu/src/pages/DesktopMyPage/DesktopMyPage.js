@@ -3,7 +3,7 @@ import './DesktopMyPage.css';
 import DesktopLiveAndMyPage from '../../components/DesktopNav/DesktopLiveAndMyPage';
 import LiveCarousel from '../../components/LiveCarousel/LiveCarousel';
 import defaultProfile from '../../assets/images/defaultProfileImageIMSI.png';
-import KakaoLogo from '../../assets/images/카카오로고.jpg';
+import KakaoLogo from '../../assets/images/kakaoLogo.png';
 import LiveControllerApi from '../../services/LiveControllerApi';
 import UserControllerApi from '../../services/UserControllerApi';
 import MyPageModal from '../../components/MyPageModal/MyPageModal';
