@@ -281,69 +281,39 @@ function MobileLivePage() {
             if (devices.length < 2) return;
 
             const currentDevice = currentVideoDevice;
-            const isAndroid = /Android/i.test(navigator.userAgent);
+            let nextDevice;
 
-            if (isAndroid) {
-                // 안드로이드 디바이스용 카메라 전환 로직
-                const isCurrentFront = currentDevice.label.toLowerCase().includes('front') ||
-                                     currentDevice.label.toLowerCase().includes('전면') ||
-                                     currentDevice.label.toLowerCase().includes('user');
-                
-                const newFacingMode = isCurrentFront ? 'environment' : 'user';
-                
-                if (publisher) {
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { 
-                            facingMode: newFacingMode,
-                            width: { ideal: 640 },
-                            height: { ideal: 480 }
-                        }
-                    });
-                    const videoTrack = stream.getVideoTracks()[0];
-                    
-                    // 새로운 디바이스 정보 업데이트
-                    const newDevice = devices.find(device => device.deviceId === videoTrack.getSettings().deviceId);
-                    if (newDevice) {
-                        setCurrentVideoDevice(newDevice);
-                    }
-                    
-                    await publisher.replaceTrack(videoTrack);
-                }
+            const isCurrentFront = currentDevice.label.toLowerCase().includes('front') ||
+                                 currentDevice.label.toLowerCase().includes('전면') ||
+                                 currentDevice.label.toLowerCase().includes('user');
+
+            if (isCurrentFront) {
+                nextDevice = devices.find(device => 
+                    device.label.toLowerCase().includes('back') ||
+                    device.label.toLowerCase().includes('후면') ||
+                    device.label.toLowerCase().includes('environment')
+                );
             } else {
-                // 기존 iOS/기타 디바이스용 카메라 전환 로직
-                let nextDevice;
-                const isCurrentFront = currentDevice.label.toLowerCase().includes('front') ||
-                                     currentDevice.label.toLowerCase().includes('전면') ||
-                                     currentDevice.label.toLowerCase().includes('user');
+                nextDevice = devices.find(device => 
+                    device.label.toLowerCase().includes('front') ||
+                    device.label.toLowerCase().includes('전면') ||
+                    device.label.toLowerCase().includes('user')
+                );
+            }
 
-                if (isCurrentFront) {
-                    nextDevice = devices.find(device => 
-                        device.label.toLowerCase().includes('back') ||
-                        device.label.toLowerCase().includes('후면') ||
-                        device.label.toLowerCase().includes('environment')
-                    );
-                } else {
-                    nextDevice = devices.find(device => 
-                        device.label.toLowerCase().includes('front') ||
-                        device.label.toLowerCase().includes('전면') ||
-                        device.label.toLowerCase().includes('user')
-                    );
-                }
+            if (!nextDevice) {
+                const currentIndex = devices.findIndex(device => device.deviceId === currentDevice.deviceId);
+                nextDevice = devices[(currentIndex + 1) % devices.length];
+            }
 
-                if (!nextDevice) {
-                    const currentIndex = devices.findIndex(device => device.deviceId === currentDevice.deviceId);
-                    nextDevice = devices[(currentIndex + 1) % devices.length];
-                }
-
-                if (publisher) {
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { deviceId: { exact: nextDevice.deviceId } }
-                    });
-                    const videoTrack = stream.getVideoTracks()[0];
-                    
-                    await publisher.replaceTrack(videoTrack);
-                    setCurrentVideoDevice(nextDevice);
-                }
+            if (publisher) {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { deviceId: { exact: nextDevice.deviceId } }
+                });
+                const videoTrack = stream.getVideoTracks()[0];
+                
+                await publisher.replaceTrack(videoTrack);
+                setCurrentVideoDevice(nextDevice);
             }
         } catch (error) {
             console.error('Error switching camera:', error);
