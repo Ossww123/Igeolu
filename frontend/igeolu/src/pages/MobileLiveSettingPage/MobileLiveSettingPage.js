@@ -204,8 +204,8 @@ const MobileLiveSettingPage = () => {
                   />
                   <div className='mobile-live-setting-page-content-my-estate-list-item-info'>
                     <p id='estate-type'>
-                      {(property.deposit ?? 0).toLocaleString()}원 /{' '}
-                      {(property.monthlyRent ?? 0).toLocaleString()}원
+                      {(property.deposit ?? 0).toLocaleString()}만원 /{' '}
+                      {(property.monthlyRent ?? 0).toLocaleString()}만원
                     </p>
                     <p id='estate-description'>
                       {property.description || '소개 없음'}
