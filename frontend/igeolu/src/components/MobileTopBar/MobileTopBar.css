@@ -74,32 +74,42 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  /* right: 0; */
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+  display: flex;
+  justify-content: center;
 }
 
 .mobile-notification-drawer {
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  margin-left: -196.5px; /* width의 절반, translateX(-50%) 대신 사용 */
+  width: 393px;
   background-color: #272626;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
-  animation: slideUp 0.3s ease-out;
+  animation: slideUpSimple 0.3s ease-out;
 }
 
-@keyframes slideUp {
+/* 반응형으로 만들기 위한 미디어 쿼리 추가 */
+@media (max-width: 393px) {
+  .mobile-notification-drawer {
+    width: 100%;
+  }
+}
+
+@keyframes slideUpSimple {
   from {
-      transform: translateY(100%);
+    transform: translateY(100%);
   }
   to {
-      transform: translateY(0);
+    transform: translateY(0);
   }
 }
 
