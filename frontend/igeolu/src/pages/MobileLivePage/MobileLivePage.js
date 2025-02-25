@@ -307,12 +307,34 @@ function MobileLivePage() {
             }
 
             if (publisher) {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { deviceId: { exact: nextDevice.deviceId } }
-                });
-                const videoTrack = stream.getVideoTracks()[0];
+                const isAndroid = /Android/i.test(navigator.userAgent);
                 
-                await publisher.replaceTrack(videoTrack);
+                if (isAndroid) {
+                    // 안드로이드용 안정적인 카메라 전환
+                    const currentTracks = publisher.stream.getVideoTracks();
+                    currentTracks.forEach(track => {
+                        track.stop();
+                        track.enabled = false;
+                    });
+                    
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    
+                    publisher.publishVideo(false);
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: { deviceId: { exact: nextDevice.deviceId } }
+                    });
+                    const videoTrack = stream.getVideoTracks()[0];
+                    await publisher.replaceTrack(videoTrack);
+                    publisher.publishVideo(true);
+                } else {
+                    // iOS용 간단한 카메라 전환
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: { deviceId: { exact: nextDevice.deviceId } }
+                    });
+                    const videoTrack = stream.getVideoTracks()[0];
+                    await publisher.replaceTrack(videoTrack);
+                }
+                
                 setCurrentVideoDevice(nextDevice);
             }
         } catch (error) {
