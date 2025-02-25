@@ -137,7 +137,7 @@ const MobileLoginPage = () => {
               href="https://i12d205.p.ssafy.io/api/oauth2/authorization/kakao?state=realtor"
               className="mobile-kakao-button"
             >
-              <MessageCircle size={20} />
+              <MessageCircle size={20} fill="#3A1D1D"/>
               <span>카카오로 로그인하기</span>
             </a>
           </div>

@@ -61,10 +61,10 @@ class NotificationWebSocket extends BaseWebSocket {
 
     try {
       const subscriptionPath = `/api/sub-user/${this.userId}/notifications`;
-      console.log('📌 알림 구독 시도:', {
-        path: subscriptionPath,
-        userId: this.userId,
-      });
+      // console.log('📌 알림 구독 시도:', {
+      //   path: subscriptionPath,
+      //   userId: this.userId,
+      // });
 
       this.subscription = this.stompClient.subscribe(
         subscriptionPath,
@@ -94,7 +94,7 @@ class NotificationWebSocket extends BaseWebSocket {
         }
       );
 
-      console.log('✅ 알림 구독 완료');
+      // console.log('✅ 알림 구독 완료');
     } catch (error) {
       console.error('❌ 알림 구독 중 오류:', error);
       throw error;
