@@ -1,5 +1,5 @@
 /* Container Layout */
-.memo-container {
+.memo2-container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -9,7 +9,7 @@
 }
 
 /* Title Section */
-.memo-title {
+.memo2-title {
     width: 100%;
     height: 10%;
     margin-bottom: 15px;
@@ -18,22 +18,21 @@
 }
 
 /* Content Section */
-.memo-content {
+.memo2-content {
     width: 100%;
     height: 40%;
     flex: 1;
-    margin: 10px 0 10px 0;
+    margin: 20px 0 10px 0;
 }
 
-
 /* Content Elements */
-.memo-content ul {
+.memo2-content ul {
     margin: 0;
     padding-left: 20px;
 }
 
 /* Input Elements */
-.property-select {
+.memo2-property-select {
     width: 100%;
     padding: 10px 15px;
     border: 2px solid #01ADFF;
@@ -51,27 +50,27 @@
     transition: all 0.3s ease;
 }
 
-.property-select:hover {
+.memo2-property-select:hover {
     border-color: #0088cc;
     box-shadow: 0 2px 8px rgba(1, 173, 255, 0.1);
 }
 
-.property-select:focus {
+.memo2-property-select:focus {
     outline: none;
     border-color: #0088cc;
     box-shadow: 0 2px 8px rgba(1, 173, 255, 0.2);
 }
 
-.property-select option {
+.memo2-property-select option {
     padding: 10px;
     font-size: 14px;
     background-color: white;
     color: #333;
 }
 
-.memo-textarea {
+.memo2-textarea {
     width: 100%;
-    height: 80%;
+    height: 100%;
     padding: 15px;
     border: 2px solid #01ADFF;
     border-radius: 8px;
@@ -83,23 +82,23 @@
     transition: all 0.3s ease;
 }
 
-.memo-textarea:hover {
+.memo2-textarea:hover {
     border-color: #0088cc;
     box-shadow: 0 2px 8px rgba(1, 173, 255, 0.1);
 }
 
-.memo-textarea:focus {
+.memo2-textarea:focus {
     outline: none;
     border-color: #0088cc;
     box-shadow: 0 2px 8px rgba(1, 173, 255, 0.2);
 }
 
-.memo-textarea::placeholder {
+.memo2-textarea::placeholder {
     color: #aaa;
     font-size: 14px;
 }
 
-.memo-input {
+.memo2-input {
     width: 90%;
     height: 10%;
     display: flex;
@@ -110,7 +109,7 @@
     margin-bottom: 15px;
 }
 
-.memo-input input {
+.memo2-input input {
     width: 100%;
     height: 80%;
     border-radius: 50px;
@@ -120,13 +119,13 @@
 }
 
 /* Focus States */
-.memo-textarea:focus {
+.memo2-textarea:focus {
     outline: none;
     border-color: #0088cc;
 }
 
 /* Toolbar Styles */
-.memo-toolbar {
+.memo2-toolbar {
     display: flex;
     gap: 10px;
     width: 100%;
@@ -136,7 +135,7 @@
     margin-bottom: 10px;
 }
 
-.memo-toolbar button {
+.memo2-toolbar button {
     padding: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -147,25 +146,25 @@
     background: none;
 }
 
-.memo-toolbar button:hover {
+.memo2-toolbar button:hover {
     background: #e6f7ff;
 }
 
-.memo-toolbar button.active {
+.memo2-toolbar button.active {
     color: #01ADFF;
 }
 
-.memo-toolbar button svg {
+.memo2-toolbar button svg {
     font-size: 1.5rem;
 }
 
 /* Footer & Buttons */
-.memo-footer {
+.memo2-footer {
     display: flex;
     justify-content: flex-end;
 }
 
-.save-button {
+.memo2-save-button {
     padding: 8px 20px;
     background-color: #01ADFF;
     color: white;
@@ -175,31 +174,31 @@
     font-size: 14px;
 }
 
-.save-button:hover {
+.memo2-save-button:hover {
     background-color: #0088cc;
 }
 
 /* Textarea Scrollbar Styles */
-.memo-textarea::-webkit-scrollbar {
+.memo2-textarea::-webkit-scrollbar {
     width: 6px;
 }
 
-.memo-textarea::-webkit-scrollbar-track {
+.memo2-textarea::-webkit-scrollbar-track {
     background: #e8f7ff;
     border-radius: 3px;
 }
 
-.memo-textarea::-webkit-scrollbar-thumb {
+.memo2-textarea::-webkit-scrollbar-thumb {
     background: #01ADFF;
     border-radius: 3px;
 }
 
-.memo-textarea::-webkit-scrollbar-thumb:hover {
+.memo2-textarea::-webkit-scrollbar-thumb:hover {
     background: #0088cc;
 }
 
 /* Firefox Scrollbar */
-.memo-textarea {
+.memo2-textarea {
     scrollbar-width: thin;
     scrollbar-color: #01ADFF #e8f7ff;
 }

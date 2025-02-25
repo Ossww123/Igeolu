@@ -228,8 +228,8 @@ const MobileLiveSettingPage = () => {
                   <div className='selected-property-info'>
                     <p>{property.description || '소개 없음'}</p>
                     <p>
-                      {(property.deposit ?? 0).toLocaleString()}원 /{' '}
-                      {(property.monthlyRent ?? 0).toLocaleString()}원
+                      {(property.deposit ?? 0).toLocaleString()}만원 /{' '}
+                      {(property.monthlyRent ?? 0).toLocaleString()}만원
                     </p>
                   </div>
                 </div>

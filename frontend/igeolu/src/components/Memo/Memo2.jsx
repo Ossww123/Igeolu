@@ -92,12 +92,12 @@ function Memo2({ sessionId, selectedMemoText, setSelectedMemoText }) {
     };
 
     return (
-        <div className='memo-container'>
-            <div className='memo-title'>
+        <div className='memo2-container'>
+            <div className='memo2-title'>
                 <select 
                     value={selectedProperty?.livePropertyId || ''} 
                     onChange={handlePropertyChange}
-                    className='property-select'
+                    className='memo2-property-select'
                 >
                     {properties.map(property => (
                         <option key={property.livePropertyId} value={property.livePropertyId}>
@@ -106,16 +106,16 @@ function Memo2({ sessionId, selectedMemoText, setSelectedMemoText }) {
                     ))}
                 </select>
             </div>
-            <div className='memo-content'>
+            <div className='memo2-content'>
                 <textarea
                     value={selectedMemoText || ''}
                     onChange={(e) => setSelectedMemoText(e.target.value)}
                     placeholder="메모를 입력하세요"
-                    className='memo-textarea'
+                    className='memo2-textarea'
                 />
             </div>
-            <div className='memo-footer'>
-                <button onClick={handleSaveMemo} className='save-button'>
+            <div className='memo2-footer'>
+                <button onClick={handleSaveMemo} className='memo2-save-button'>
                     저장
                 </button>
             </div>
