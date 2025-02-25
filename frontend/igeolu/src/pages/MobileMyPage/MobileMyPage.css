@@ -17,6 +17,7 @@
     overflow-y: auto;  /* 전체 스크롤 적용 */
     -ms-overflow-style: none;  /* IE, Edge */
     scrollbar-width: none;  /* Firefox */
+    padding-bottom: 76px;
 }
 .mobile-my-page__top {
     width: calc(100% - 40px); 
