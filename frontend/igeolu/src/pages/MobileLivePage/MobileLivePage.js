@@ -280,86 +280,43 @@ function MobileLivePage() {
         try {
             if (devices.length < 2) return;
 
-            // 안드로이드 기기 감지
-            const isAndroid = /Android/i.test(navigator.userAgent);
             const currentDevice = currentVideoDevice;
             let nextDevice;
 
-            if (isAndroid) {
-                // 간단한 버전의 안드로이드 카메라 전환 로직
+            const isCurrentFront = currentDevice.label.toLowerCase().includes('front') ||
+                                 currentDevice.label.toLowerCase().includes('전면') ||
+                                 currentDevice.label.toLowerCase().includes('user');
+
+            if (isCurrentFront) {
+                nextDevice = devices.find(device => 
+                    device.label.toLowerCase().includes('back') ||
+                    device.label.toLowerCase().includes('후면') ||
+                    device.label.toLowerCase().includes('environment')
+                );
+            } else {
+                nextDevice = devices.find(device => 
+                    device.label.toLowerCase().includes('front') ||
+                    device.label.toLowerCase().includes('전면') ||
+                    device.label.toLowerCase().includes('user')
+                );
+            }
+
+            if (!nextDevice) {
                 const currentIndex = devices.findIndex(device => device.deviceId === currentDevice.deviceId);
                 nextDevice = devices[(currentIndex + 1) % devices.length];
-
-                if (publisher) {
-                    try {
-                        // iOS 방식처럼 직접 트랙 교체 시도
-                        const stream = await navigator.mediaDevices.getUserMedia({
-                            video: { deviceId: { exact: nextDevice.deviceId } }
-                        });
-                        const videoTrack = stream.getVideoTracks()[0];
-                        await publisher.replaceTrack(videoTrack);
-                    } catch (error) {
-                        console.error('Simple track replacement failed, trying fallback method:', error);
-                        // 실패시 기존 안전한 방식으로 폴백
-                        publisher.stream.getVideoTracks().forEach(track => track.stop());
-                        publisher.publishVideo(false);
-                        
-                        const newStream = await navigator.mediaDevices.getUserMedia({
-                            video: { 
-                                deviceId: { exact: nextDevice.deviceId },
-                                width: { ideal: 640 },
-                                height: { ideal: 480 }
-                            }
-                        });
-                        
-                        const newVideoTrack = newStream.getVideoTracks()[0];
-                        await publisher.replaceTrack(newVideoTrack);
-                        
-                        setTimeout(() => {
-                            publisher.publishVideo(true);
-                        }, 100);
-                    }
-                }
-            } else {
-                // 기존 iOS용 로직 유지
-                const isCurrentFront = currentDevice.label.toLowerCase().includes('front') ||
-                                     currentDevice.label.toLowerCase().includes('전면') ||
-                                     currentDevice.label.toLowerCase().includes('user');
-
-                if (isCurrentFront) {
-                    nextDevice = devices.find(device => 
-                        device.label.toLowerCase().includes('back') ||
-                        device.label.toLowerCase().includes('후면') ||
-                        device.label.toLowerCase().includes('environment')
-                    );
-                } else {
-                    nextDevice = devices.find(device => 
-                        device.label.toLowerCase().includes('front') ||
-                        device.label.toLowerCase().includes('전면') ||
-                        device.label.toLowerCase().includes('user')
-                    );
-                }
-
-                if (!nextDevice) {
-                    const currentIndex = devices.findIndex(device => device.deviceId === currentDevice.deviceId);
-                    nextDevice = devices[(currentIndex + 1) % devices.length];
-                }
-
-                if (publisher) {
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { deviceId: { exact: nextDevice.deviceId } }
-                    });
-                    const videoTrack = stream.getVideoTracks()[0];
-                    await publisher.replaceTrack(videoTrack);
-                }
             }
 
-            setCurrentVideoDevice(nextDevice);
+            if (publisher) {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { deviceId: { exact: nextDevice.deviceId } }
+                });
+                const videoTrack = stream.getVideoTracks()[0];
+                
+                await publisher.replaceTrack(videoTrack);
+                setCurrentVideoDevice(nextDevice);
+            }
         } catch (error) {
             console.error('Error switching camera:', error);
-            if (publisher) {
-                publisher.publishVideo(true);
-            }
         }
     };
 
