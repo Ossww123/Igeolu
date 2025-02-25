@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
-import mobileLogo from '../../assets/images/모바일로고.png';
+import mobileLogo from '../../assets/images/모바일로고2.png';
 import './MobileLoginPage.css';
 
 const MobileLoginPage = () => {
