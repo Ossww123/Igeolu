@@ -143,6 +143,7 @@
 }
 
 .schedule-item {
+    cursor: pointer;
     display: flex;
     padding: 15px;
     background-color: #2F2E2E;
@@ -151,6 +152,49 @@
     transform: translateX(0);
     transition: transform 0.3s ease;
     touch-action: pan-x;
+    user-select: none; /* 텍스트 선택 방지 */
+}
+
+/* 호버 효과 추가 */
+.schedule-item:hover {
+    background-color: #363535;
+}
+
+/* 수정/삭제 버튼에 호버 효과 추가 */
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 0.9;
+    filter: brightness(1.1);
+}
+
+/* 데스크톱 환경에서 더 명확한 클릭 영역을 위한 스타일 */
+@media (min-width: 768px) {
+    .schedule-item {
+        /* 데스크톱에서 좀 더 큰 패딩 */
+        padding: 16px;
+    }
+    
+    .edit-btn, .delete-btn {
+        /* 데스크톱에서 더 커다란 버튼 */
+        width: 100px;
+    }
+    
+    .action-icon {
+        width: 34px;
+        height: 34px;
+    }
+    
+    .edit-btn span, .delete-btn span {
+        font-size: 14px;
+    }
+}
+
+/* 액션 버튼의 상태를 시각적으로 표시 */
+.schedule-item[data-opened="true"] {
+    transform: translateX(-200px);
+}
+
+.schedule-actions[data-opened="true"] {
+    transform: translateX(-200px);
 }
 
 .schedule-item::before {

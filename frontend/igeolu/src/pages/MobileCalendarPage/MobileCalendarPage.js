@@ -18,6 +18,7 @@ function MobileCalendarPage() {
   const [groupedAppointments, setGroupedAppointments] = useState({});
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [appointmentToDelete, setAppointmentToDelete] = useState(null);
+  const [openedAppointmentId, setOpenedAppointmentId] = useState(null);
   const appointmentRefs = useRef({});
 
   const user = JSON.parse(localStorage.getItem('user'));
@@ -202,17 +203,87 @@ function MobileCalendarPage() {
     const currentX = parseInt(
       scheduleItem.style.transform.replace('translateX(-', '')
     );
-
-    const finalTransform =
-      currentX > 80 ? 'translateX(-200px)' : 'translateX(0)';
-    scheduleItem.style.transform = finalTransform;
-    actions.style.transform = finalTransform;
-
+  
+    if (currentX > 80) {
+      scheduleItem.style.transform = 'translateX(-200px)';
+      actions.style.transform = 'translateX(-200px)';
+      setOpenedAppointmentId(id); // 열린 상태로 설정
+    } else {
+      scheduleItem.style.transform = 'translateX(0)';
+      actions.style.transform = 'translateX(0)';
+      setOpenedAppointmentId(null); // 닫힌 상태로 설정
+    }
+  
     setSlideStates((prev) => ({
       ...prev,
       [id]: { startX: null },
     }));
   };
+
+  const handleItemClick = (appointmentId, e) => {
+    // 이미 열려있는 아이템은 닫기
+    if (openedAppointmentId === appointmentId) {
+      closeAppointmentActions(e.currentTarget);
+      setOpenedAppointmentId(null);
+      return;
+    }
+    
+    // 이전에 열려있던 아이템 닫기
+    if (openedAppointmentId) {
+      const previousItem = document.querySelector(`[data-appointment-id="${openedAppointmentId}"]`);
+      if (previousItem) {
+        closeAppointmentActions(previousItem);
+      }
+    }
+    
+    // 클릭한 아이템 열기
+    openAppointmentActions(e.currentTarget);
+    setOpenedAppointmentId(appointmentId);
+  };
+
+  // 아이템 열기 함수
+const openAppointmentActions = (element) => {
+  const scheduleItem = element;
+  const container = element.parentElement;
+  const actions = container.querySelector('.schedule-actions');
+  
+  scheduleItem.style.transform = 'translateX(-200px)';
+  actions.style.transform = 'translateX(-200px)';
+};
+
+// 아이템 닫기 함수
+const closeAppointmentActions = (element) => {
+  const scheduleItem = element;
+  const container = element.parentElement;
+  const actions = container.querySelector('.schedule-actions');
+  
+  scheduleItem.style.transform = 'translateX(0)';
+  actions.style.transform = 'translateX(0)';
+};
+
+// 다른 곳 클릭시 열린 아이템 닫기
+useEffect(() => {
+  const handleOutsideClick = (e) => {
+    if (!openedAppointmentId) return;
+    
+    // 클릭된 요소가 schedule-item, edit-btn, delete-btn이 아닌 경우 닫기
+    if (!e.target.closest('.schedule-item') && 
+        !e.target.closest('.edit-btn') && 
+        !e.target.closest('.delete-btn')) {
+      const openedItem = document.querySelector(`[data-appointment-id="${openedAppointmentId}"]`);
+      if (openedItem) {
+        closeAppointmentActions(openedItem);
+      }
+      setOpenedAppointmentId(null);
+    }
+  };
+  
+  document.addEventListener('click', handleOutsideClick);
+  return () => {
+    document.removeEventListener('click', handleOutsideClick);
+  };
+}, [openedAppointmentId]);
+  
 
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
@@ -267,21 +338,23 @@ function MobileCalendarPage() {
                         className='schedule-item-container'
                       >
                         <div
-                          className={`schedule-item ${
-                            appointment.appointmentType === 'LIVE'
-                              ? 'type-live'
-                              : 'type-common'
-                          }`}
-                          onTouchStart={(e) =>
-                            handleTouchStart(appointment.appointmentId, e)
-                          }
-                          onTouchMove={(e) =>
-                            handleTouchMove(appointment.appointmentId, e)
-                          }
-                          onTouchEnd={(e) =>
-                            handleTouchEnd(appointment.appointmentId, e)
-                          }
-                        >
+  className={`schedule-item ${
+    appointment.appointmentType === 'LIVE'
+      ? 'type-live'
+      : 'type-common'
+  }`}
+  data-appointment-id={appointment.appointmentId} // 데이터 속성 추가
+  onClick={(e) => handleItemClick(appointment.appointmentId, e)}
+  onTouchStart={(e) =>
+    handleTouchStart(appointment.appointmentId, e)
+  }
+  onTouchMove={(e) =>
+    handleTouchMove(appointment.appointmentId, e)
+  }
+  onTouchEnd={(e) =>
+    handleTouchEnd(appointment.appointmentId, e)
+  }
+>
                           <div className='schedule-info'>
                             <div className='schedule-main'>
                               <span className='schedule-opponent'>
