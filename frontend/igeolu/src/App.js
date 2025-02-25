@@ -203,7 +203,7 @@ function App() {
         // 4. 모든 채팅방 구독
         roomsSocketRef.current.subscribeToChatRooms(rooms);
 
-        console.log('WebSocket 초기화 및 채팅방 구독 완료');
+        // console.log('WebSocket 초기화 및 채팅방 구독 완료');
       } catch (error) {
         console.error('WebSocket 초기화 실패:', error);
         setError('실시간 업데이트 연결에 실패했습니다.');
@@ -297,7 +297,7 @@ function App() {
   }, [user?.userId, user?.role]);
 
   useEffect(() => {
-    console.log('activeRoomId 변경:', activeRoomId);
+    // console.log('activeRoomId 변경:', activeRoomId);
   }, [activeRoomId]);
 
   const handleLoginClick = () => {
