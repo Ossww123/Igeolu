@@ -31,10 +31,12 @@
     font-weight: bold;
     margin: 0;
 }
+/* my-info 스타일 조정 - 상단 여백 추가 */
 .mobile-my-page__my-info {
     width: calc(100% - 40px);
     display: flex;
     flex-direction: column;
+    margin-top: 20px; /* 상단 여백 추가 */
 }
 .mobile-my-page__my-info p {
     font-size: 24px;
