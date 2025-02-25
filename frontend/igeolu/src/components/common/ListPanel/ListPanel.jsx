@@ -76,8 +76,15 @@ const ListPanel = ({ type, onItemClick, items = [] }) => {
                     {type === 'room' ? (
                       <>
                         <div className='item-price'>
-                          <span className='price-value'>{item.deposit?.toLocaleString()}만원</span>
-                          <span className='price-value'>{item.monthlyRent?.toLocaleString()}만원</span>
+                          <span className='price-value'>
+                            {item.deposit?.toLocaleString()}만원
+                          </span>
+                          <span className='price-value'>
+                            /
+                          </span>
+                          <span className='price-value'>
+                            {item.monthlyRent?.toLocaleString()}만원
+                          </span>
                         </div>
                         <div className='item-details'>
                           <div className='item-specs'>
