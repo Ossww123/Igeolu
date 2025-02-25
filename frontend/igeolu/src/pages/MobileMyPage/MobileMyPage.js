@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaCamera } from 'react-icons/fa';
 import axios from 'axios';
 import { useUser } from '../../contexts/UserContext';
+import MobileTopBar from '../../components/MobileTopBar/MobileTopBar';
 
 function MobileMyPage() {
   const { logout } = useUser();
@@ -140,9 +141,7 @@ function MobileMyPage() {
   return (
     <div className='mobile-my-page-container'>
       <div className='mobile-my-page'>
-        <div className='mobile-my-page__top'>
-          <p>마이페이지</p>
-        </div>
+      <MobileTopBar title="마이페이지" />
         <div className='mobile-my-page__my-info'>
           <p>나의 프로필 정보</p>
           <div className='mobile-my-page__my-info__profile'>
