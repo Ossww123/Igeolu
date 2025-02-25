@@ -307,6 +307,8 @@ function MobileLivePage() {
             }
 
             if (publisher) {
+                publisher.stream.getVideoTracks().forEach(track => track.stop());
+
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { deviceId: { exact: nextDevice.deviceId } }
                 });
