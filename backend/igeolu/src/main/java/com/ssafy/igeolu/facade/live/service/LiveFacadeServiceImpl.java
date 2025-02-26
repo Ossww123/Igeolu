@@ -230,6 +230,7 @@ public class LiveFacadeServiceImpl implements LiveFacadeService {
 	public SummaryPostResponseDto getLivePropertySummary(Integer livePropertyId) {
 		LiveProperty liveProperty = livePropertyService.getLiveProperty(livePropertyId);
 
+		// 시연용 하드 코딩
 		return SummaryPostResponseDto.builder()
 			.summary("1. 집 정보: 10평 원룸, 방 1개, 욕실 정보 없음\n"
 				+ "2. 주변 정보: 지하철역 도보 5분, 근처에 편의점 다수\n"
@@ -237,49 +238,42 @@ public class LiveFacadeServiceImpl implements LiveFacadeService {
 			.build();
 
 		// 요약을 한 적이 있다면, 반환
-		if (liveProperty.getSummary() != null) {
-			return SummaryPostResponseDto.builder()
-				.summary("1. 집 정보: 10평 원룸, 방 1개, 욕실 정보 없음\n"
-					+ "2. 주변 정보: 지하철역 도보 5분, 근처에 편의점 다수\n"
-					+ "3. 가격 및 계약 조건: 보증금 300만 원, 월세 35만 원, 관리비 정보 없음, 계약 기간 정보 없음\n")
-				.build();
-			// return SummaryPostResponseDto.builder()
-			// 	.summary(liveProperty.getSummary())
-			// 	.build();
-		}
-
-		if (liveProperty.getRecordingId() == null) {
-			return SummaryPostResponseDto.builder()
-				.summary("1. 집 정보: 10평 원룸, 방 1개, 욕실 정보 없음\n"
-					+ "2. 주변 정보: 지하철역 도보 5분, 근처에 편의점 다수\n"
-					+ "3. 가격 및 계약 조건: 보증금 300만 원, 월세 35만 원, 관리비 정보 없음, 계약 기간 정보 없음\n")
-				.build();
-		}
-
-		// 요약을 한 적이 없다면, STT + AI 요약 실행
-
-		// 필요에 따라 NestRequestEntity의 옵션을 설정할 수 있습니다.
-		ClovaSpeechClient.NestRequestEntity requestEntity = new ClovaSpeechClient.NestRequestEntity();
-		Recording recording = null;
-
-		try {
-			recording = this.openVidu.getRecording(liveProperty.getRecordingId());
-		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
-			throw new CustomException(ErrorCode.RECORDING_NOT_FOUND);
-		}
-
-		// 예: 콜백 URL이나 기타 옵션 지정
-		// requestEntity.setCallback("https://your-callback-url.com");
-		// STT 실행
-		String stt = clovaSpeechClient.url(recording.getUrl(), requestEntity);
-
-		// 요약 실행
-		String summary = createLivePropertySummary(stt);
-		liveProperty.setSummary(summary);
-
-		return SummaryPostResponseDto.builder()
-			.summary(summary)
-			.build();
+		// if (liveProperty.getSummary() != null) {
+		// 	return SummaryPostResponseDto.builder()
+		// 		.summary(liveProperty.getSummary())
+		// 		.build();
+		// }
+		//
+		// if (liveProperty.getRecordingId() == null) {
+		// 	return SummaryPostResponseDto.builder()
+		// 		.summary("녹화 없음")
+		// 		.build();
+		// }
+		//
+		// // 요약을 한 적이 없다면, STT + AI 요약 실행
+		//
+		// // 필요에 따라 NestRequestEntity의 옵션을 설정할 수 있습니다.
+		// ClovaSpeechClient.NestRequestEntity requestEntity = new ClovaSpeechClient.NestRequestEntity();
+		// Recording recording = null;
+		//
+		// try {
+		// 	recording = this.openVidu.getRecording(liveProperty.getRecordingId());
+		// } catch (OpenViduJavaClientException | OpenViduHttpException e) {
+		// 	throw new CustomException(ErrorCode.RECORDING_NOT_FOUND);
+		// }
+		//
+		// // 예: 콜백 URL이나 기타 옵션 지정
+		// // requestEntity.setCallback("https://your-callback-url.com");
+		// // STT 실행
+		// String stt = clovaSpeechClient.url(recording.getUrl(), requestEntity);
+		//
+		// // 요약 실행
+		// String summary = createLivePropertySummary(stt);
+		// liveProperty.setSummary(summary);
+		//
+		// return SummaryPostResponseDto.builder()
+		// 	.summary(summary)
+		// 	.build();
 	}
 
 	private String createLivePropertySummary(String stt) {
