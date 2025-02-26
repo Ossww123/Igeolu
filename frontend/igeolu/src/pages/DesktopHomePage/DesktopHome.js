@@ -1,5 +1,5 @@
 import DesktopMainPageNav from '../../components/DesktopNav/DesktopMainPageNav'
-import MainVideo from '../../assets/videos/수정.mp4'
+import MainVideo from '../../assets/videos/찐찐막.mp4'
 import './DesktopHome.css'
 import rightTopBlock from '../../assets/images/우측상단.png'
 import leftBottomBlock from '../../assets/images/좌측하단.png'
