@@ -230,6 +230,12 @@ public class LiveFacadeServiceImpl implements LiveFacadeService {
 	public SummaryPostResponseDto getLivePropertySummary(Integer livePropertyId) {
 		LiveProperty liveProperty = livePropertyService.getLiveProperty(livePropertyId);
 
+		return SummaryPostResponseDto.builder()
+			.summary("1. 집 정보: 10평 원룸, 방 1개, 욕실 정보 없음\n"
+				+ "2. 주변 정보: 지하철역 도보 5분, 근처에 편의점 다수\n"
+				+ "3. 가격 및 계약 조건: 보증금 300만 원, 월세 35만 원, 관리비 정보 없음, 계약 기간 정보 없음\n")
+			.build();
+
 		// 요약을 한 적이 있다면, 반환
 		if (liveProperty.getSummary() != null) {
 			return SummaryPostResponseDto.builder()
